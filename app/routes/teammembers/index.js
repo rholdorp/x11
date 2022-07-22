@@ -1,1 +1,3 @@
-<h1> Team Members </h1>
+export default function IndexRoute() {
+    return <div>Teammembers Index Route</div>;
+  }

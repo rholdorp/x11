@@ -1,1 +1,3 @@
-<h1> Assignments </h1>
+export default function IndexRoute() {
+    return <div>Assignments Index Route</div>;
+  }
