@@ -10,7 +10,7 @@ export default function NewTeamMember() {
           </div>
           <div>
             <label>
-              Last name: <textarea name="last_name" />
+              Last name: <input type="text" name="last_name" />
             </label>
           </div>
           <div>
