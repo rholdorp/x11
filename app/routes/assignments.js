@@ -1,9 +1,9 @@
 import { Outlet } from "@remix-run/react";
 
-export default function TeamMembersRoute() {
+export default function AssignmentsRoute() {
   return (
     <div>
-      <h1>TEAMMEMBERS SECTION</h1>
+      <h1>ASSIGNMENTS SECTION</h1>
       <main>
         <Outlet />
       </main>
