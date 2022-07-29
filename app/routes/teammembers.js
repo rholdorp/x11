@@ -1,8 +1,15 @@
-import { Outlet } from "@remix-run/react";
+import { LinksFunction } from "@remix-run/node";
+import { Outlet, Link } from "@remix-run/react";
 import { json } from "@remix-run/node"; // or cloudflare/deno
 import { useLoaderData } from "@remix-run/react";
 
+import stylesUrl from "~/styles/index.css";
+
 import { db } from "~/utils/db.server";
+
+export function links () {
+  return [{ rel: "stylesheet", href: stylesUrl }];
+}
 
 export const loader = async () => {
   return json(await db.TeamMember.findMany());
