@@ -20,16 +20,25 @@ export default  function TeamMembersRoute() {
 
   return (
     <div>
-      <h1>TEAMMEMBERS SECTION</h1>
-      <ul>
-      {data.map((TeamMember) => (
-        <li key={TeamMember.id}>{TeamMember.firstName} {TeamMember.lastName}</li>
-      ))}
-    </ul>
+      <div>
+        <h1>TEAMMEMBERS SECTION</h1>
+      </div>
+      <div class="container">
+        <div class="item item-1">
+          <ul>
+            {data.map((TeamMember) => (
+              <li key={TeamMember.id}>{TeamMember.firstName} {TeamMember.lastName}</li>
+            ))}
+          </ul>
+        </div>
 
-      <main>
-        <Outlet />
-      </main>
+        <div class="item item-2">
+          <main>
+            <Outlet />
+          </main>
+        </div>
+      </div>
+
     </div>
   );
 }

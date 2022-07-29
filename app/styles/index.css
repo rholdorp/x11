@@ -1,9 +1,18 @@
-body {
-    color: hsl(0, 0%, 100%);
-    background-image: radial-gradient(
-      circle,
-      rgba(152, 11, 238, 1) 0%,
-      rgba(118, 15, 181, 1) 35%,
-      rgba(58, 13, 85, 1) 100%
-    );
-  }
+.container{
+    display: flex;
+}
+
+.item{
+    width:auto;
+    margin: 1px;
+    border:2px solid #9393;   
+    background-color: #dfdfdf;
+}
+
+.item-1{
+    flex: 1;
+}
+
+.item-2{
+    flex: 4;
+}
