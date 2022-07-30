@@ -39,6 +39,12 @@ export default  function TeamMembersRoute() {
         </div>
       </div>
 
+      <div>
+        <Link to="new_teammember" className="button">
+          Add team member
+        </Link>
+      </div>
+
     </div>
   );
 }
