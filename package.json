@@ -22,7 +22,7 @@
     "@remix-run/eslint-config": "^1.6.5",
     "esbuild-register": "^3.3.3",
     "eslint": "^8.20.0",
-    "prisma": "^4.1.0"
+    "prisma": "^4.1.1"
   },
   "engines": {
     "node": ">=14"
