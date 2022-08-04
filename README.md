@@ -23,8 +23,28 @@ npm install @prisma/client
 npx prisma db push
 ```
 
-5.  Run dev:
+5. Set your database URL in .env to:
+
+```sh
+DATABASE_URL="file:./dev.db"
+```
+
+6. Copy the database schema into schema.prima:
+
+```sh
+model TeamMember {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  firstName  String
+  lastName   String
+}
+```
+
+7.  Run dev:
 
 ```sh
 npm run dev
 ```
+
+This is work in progress, but have fun....
