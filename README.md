@@ -47,4 +47,10 @@ model TeamMember {
 npm run dev
 ```
 
+8. install bcryptjs
+
+```sh
+npm install bcryptjs
+```
+
 This is work in progress, but have fun....
