@@ -4,8 +4,9 @@ const db = new PrismaClient();
 async function seed() {
   const x11 = await db.user.create({
     data: {
-      username: "",
-      passwordHash: "",
+      username: "x11",
+      passwordHash:
+        "$2b$10$K7L1OJ45/4Y2nIvhRVpCe.FSmhDdWoXehVzJptJ/op0lSsvqNu/1u",
     },
   });
 

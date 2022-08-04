@@ -1,7 +1,7 @@
 import { ActionFunction, LinksFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useActionData, Link, useSearchParams } from "@remix-run/react";
-
+import { login, createUserSession } from "~/utils/session.server";
 import { db } from "~/utils/db.server";
 
 function validateUsername(username) {
@@ -33,34 +33,43 @@ export const action = async ({ request }) => {
   const username = form.get("username");
   const password = form.get("password");
   const redirectTo = validateUrl(form.get("redirectTo") || "/teammembers");
+
   if (
     typeof loginType !== "string" ||
     typeof username !== "string" ||
     typeof password !== "string" ||
     typeof redirectTo !== "string"
   ) {
+    console.log("username = " + username);
+    console.log("logintype = " + loginType);
+    console.log("password = " + password);
+    console.log("redirect = " + redirectTo);
     return badRequest({
       formError: `Form not submitted correctly.`,
     });
   }
 
   const fields = { loginType, username, password };
+
   const fieldErrors = {
     username: validateUsername(username),
     password: validatePassword(password),
   };
+
   if (Object.values(fieldErrors).some(Boolean))
     return badRequest({ fieldErrors, fields });
 
   switch (loginType) {
     case "login": {
-      // login to get the user
-      // if there's no user, return the fields and a formError
-      // if there is a user, create their session and redirect to /teammembers
-      return badRequest({
-        fields,
-        formError: "Not implemented",
-      });
+      const user = await login({ username, password });
+      console.log({ user });
+      if (!user) {
+        return badRequest({
+          fields,
+          formError: `Username/Password combination is incorrect`,
+        });
+      }
+      return createUserSession(user.id, redirectTo);
     }
     case "register": {
       const userExists = await db.user.findFirst({

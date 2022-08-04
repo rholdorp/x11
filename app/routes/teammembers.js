@@ -7,7 +7,7 @@ import stylesUrl from "~/styles/index.css";
 
 import { db } from "~/utils/db.server";
 
-export function links () {
+export function links() {
   return [{ rel: "stylesheet", href: stylesUrl }];
 }
 
@@ -15,7 +15,7 @@ export const loader = async () => {
   return json(await db.TeamMember.findMany());
 };
 
-export default  function TeamMembersRoute() {
+export default function TeamMembersRoute() {
   const data = useLoaderData();
 
   return (
@@ -27,7 +27,9 @@ export default  function TeamMembersRoute() {
         <div class="item item-1">
           <ul>
             {data.map((TeamMember) => (
-              <li key={TeamMember.id}>{TeamMember.firstName} {TeamMember.lastName}</li>
+              <li key={TeamMember.id}>
+                {TeamMember.firstName} {TeamMember.lastName}
+              </li>
             ))}
           </ul>
         </div>
@@ -44,7 +46,6 @@ export default  function TeamMembersRoute() {
           Add team member
         </Link>
       </div>
-
     </div>
   );
 }
