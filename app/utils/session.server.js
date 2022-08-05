@@ -14,7 +14,9 @@ export async function login({ username, password }) {
 
   return { id: user.id, username };
 }
+
 const sessionSecret = process.env.SESSION_SECRET;
+
 if (!sessionSecret) {
   throw new Error("SESSION_SECRET must be set");
 }
@@ -41,6 +43,7 @@ function getUserSession(request) {
 export async function getUserId(request) {
   const session = await getUserSession(request);
   const userId = session.get("userId");
+
   if (!userId || typeof userId !== "string") return null;
   return userId;
 }
@@ -56,6 +59,29 @@ export async function requireUserId(
     throw redirect(`/login?${searchParams}`);
   }
   return userId;
+}
+
+export async function getUser(request) {
+  const userId = await getUserId(request);
+
+  try {
+    const user = await db.user.findUnique({
+      where: { id: userId },
+      select: { id: true, username: true },
+    });
+    return user;
+  } catch {
+    throw logout(request);
+  }
+}
+
+export async function logout(request) {
+  const session = await getUserSession(request);
+  return redirect("/login", {
+    headers: {
+      "Set-Cookie": await storage.destroySession(session),
+    },
+  });
 }
 
 export async function createUserSession(userId, redirectTo) {

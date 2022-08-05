@@ -6,13 +6,25 @@ import { useLoaderData } from "@remix-run/react";
 import stylesUrl from "~/styles/index.css";
 
 import { db } from "~/utils/db.server";
+import { getUser } from "~/utils/session.server";
 
 export function links() {
   return [{ rel: "stylesheet", href: stylesUrl }];
 }
 
-export const loader = async () => {
-  return json(await db.TeamMember.findMany());
+export const loader = async ({ request }) => {
+  const TeammemberListItems = await db.TeamMember.findMany({
+    take: 5,
+    orderBy: { createdAt: "desc" },
+    select: { id: true, lastName: true },
+  });
+  const user = await getUser(request);
+
+  const data = {
+    TeammemberListItems,
+    user,
+  };
+  return json(data);
 };
 
 export default function TeamMembersRoute() {
@@ -22,11 +34,23 @@ export default function TeamMembersRoute() {
     <div>
       <div>
         <h1>TEAMMEMBERS SECTION</h1>
+        {data.user ? (
+          <div className="user-info">
+            <span>{`Hi ${data.user.username}`}</span>
+            <form action="/logout" method="post">
+              <button type="submit" className="button">
+                Logout
+              </button>
+            </form>
+          </div>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
       </div>
-      <div class="container">
-        <div class="item item-1">
+      <div className="container">
+        <div className="item item-1">
           <ul>
-            {data.map((TeamMember) => (
+            {data.TeammemberListItems.map((TeamMember) => (
               <li key={TeamMember.id}>
                 {TeamMember.firstName} {TeamMember.lastName}
               </li>
@@ -34,7 +58,7 @@ export default function TeamMembersRoute() {
           </ul>
         </div>
 
-        <div class="item item-2">
+        <div className="item item-2">
           <main>
             <Outlet />
           </main>
