@@ -3,6 +3,13 @@ import { createCookieSessionStorage, redirect } from "@remix-run/node";
 
 import { db } from "./db.server";
 
+export async function register({ username, password }) {
+  const passwordHash = await bcrypt.hash(password, 10);
+  const user = await db.user.create({
+    data: { username, passwordHash },
+  });
+  return { id: user.id, username };
+}
 export async function login({ username, password }) {
   const user = await db.user.findUnique({
     where: { username },

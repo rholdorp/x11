@@ -54,3 +54,11 @@ npm install bcryptjs
 ```
 
 This is work in progress, but have fun....
+
+When changing the dbase schema:
+
+- adjust seed.js and seed and deploy:
+
+```sh
+npx prisma db seed
+```
