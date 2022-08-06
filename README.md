@@ -1,64 +1,65 @@
 # X11 - Team allocation tooling
 
+A javascript Remix application for team allocation using:
+
+- Prisma as ORM
+- SQLite database
+- bcryptjs for password hashing
+- Cypress.io for e2e testing
+
 To install x11:
 
 1. Clone the code base.
 
 2. Install the application and dependencies:
 
-```sh
-npm install
-```
+   ```sh
+    npm install
+   ```
 
-3. Install prisma packages:
+3. Configure database path in .env
 
-```sh
-npm install --save-dev prisma
-npm install @prisma/client
-```
+   ```sh
+    DATABASE_URL="file:./dev.db"
+   ```
 
 4. Push the database:
 
-```sh
-npx prisma db push
-```
+   ```sh
+    npx prisma db push
+   ```
 
-5. Set your database URL in .env to:
+5. Copy the database schema into schema.prima:
 
-```sh
-DATABASE_URL="file:./dev.db"
-```
+   ```sh
+    model User {
+    id           String   @id @default(uuid())
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    username     String   @unique
+    passwordHash String
+    teammember   TeamMember[]
+    }
 
-6. Copy the database schema into schema.prima:
+    model TeamMember {
+    id         String   @id @default(uuid())
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    firstName  String
+    lastName   String
+    }
+   ```
 
-```sh
-model TeamMember {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  firstName  String
-  lastName   String
-}
-```
-
-7.  Run dev:
-
-```sh
-npm run dev
-```
-
-8. install bcryptjs
-
-```sh
-npm install bcryptjs
-```
+6. Run dev:
+   ```sh
+    npm run dev
+   ```
 
 This is work in progress, but have fun....
 
 When changing the dbase schema:
 
 - adjust seed.js and seed and deploy:
-
-```sh
-npx prisma db seed
-```
+  ```sh
+    npx prisma db seed
+  ```
