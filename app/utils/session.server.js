@@ -61,6 +61,7 @@ export async function requireUserId(
 ) {
   const session = await getUserSession(request);
   const userId = session.get("userId");
+  console.log("requireUserId:: userId = "+ userId);
   if (!userId || typeof userId !== "string") {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
     throw redirect(`/login?${searchParams}`);
@@ -70,6 +71,10 @@ export async function requireUserId(
 
 export async function getUser(request) {
   const userId = await getUserId(request);
+  
+  if (typeof userId !== "string") {
+    return null;
+  }
 
   try {
     const user = await db.user.findUnique({
