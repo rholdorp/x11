@@ -16,7 +16,7 @@ export const loader = async ({ request }) => {
   const TeammemberListItems = await db.TeamMember.findMany({
     take: 5,
     orderBy: { createdAt: "desc" },
-    select: { id: true, lastName: true },
+    select: { id: true, firstName: true, lastName: true },
   });
   const user = await getUser(request);
 
